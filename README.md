@@ -58,6 +58,7 @@ Ohne `?film=` wird der Standardfilm aus `src/data/films/index.ts` geladen.
 | `uploadedAgo` | z.B. `"vor 3 Tagen"`; ohne Angabe Zufallswert |
 | `placeholderColor` | Farbe der Videofläche, Standard Schwarz; Greenscreen z.B. `"#00ff00"` |
 | `placeholderLabel` | Text in der Videofläche, Standard „Videocontainer“; `""` = kein Text |
+| `trackingPoints` | `true` = 4 Tracking-Kreuze in der Videofläche, zum Abfilmen des Bildschirms mit einer Kamera |
 | `videoRecommendations` | Liste mit `recFilmTitle`, `recChannel`, `recImg` (optional), `recLength` |
 | `comments` | Liste mit `channel` und `text` |
 

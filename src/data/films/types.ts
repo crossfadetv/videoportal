@@ -48,6 +48,7 @@ export type Film = {
 	// Platzhalter für das Video, das im Schnitt eingesetzt wird.
 	placeholderColor?: string; // Standard Schwarz; z.B. "#00ff00" fürs Keying
 	placeholderLabel?: string; // Standard "Videocontainer"; "" = kein Text
+	trackingPoints?: boolean; // 4 Tracking-Kreuze, zum Abfilmen des Bildschirms
 
 	videoRecommendations: VideoRecommendation[];
 	comments: VideoComment[];

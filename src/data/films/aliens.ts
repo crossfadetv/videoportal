@@ -36,6 +36,8 @@ export const aliens: Film = {
 	// Greenscreen: reines Grün, ohne Text (Text würde beim Keying stehen bleiben)
 	placeholderColor: "#00ff00",
 	placeholderLabel: "",
+	// true = 4 Tracking-Kreuze, wenn der Bildschirm mit einer Kamera gefilmt wird
+	trackingPoints: true,
 
 	videoRecommendations: [
 		{
