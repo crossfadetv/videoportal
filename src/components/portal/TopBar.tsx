@@ -22,7 +22,9 @@ export function TopBar() {
 			align="center"
 			justify="space-between"
 			px="6"
-			h="14"
+			// Feste Höhe, Vielfaches von 4: ergibt mit contentZoom 1.25 ganze
+			// Pixel – sonst läge die Videofläche zwischen zwei Pixeln.
+			h="64px"
 			position="sticky"
 			top="0"
 			zIndex="10"
@@ -31,7 +33,7 @@ export function TopBar() {
 			{/* Logo */}
 			<HStack gap="5">
 				<Icon as={LuMenu} boxSize="5" color="gray.200" />
-				<HStack gap="2">
+				<HStack gap="3">
 					{film.portalLogo ? (
 						<Image
 							src={film.portalLogo}
@@ -61,10 +63,16 @@ export function TopBar() {
 					)}
 					{film.portalName && (
 						<Text
-							fontSize="lg"
+							fontSize={film.portalNameSize ?? "lg"}
 							fontWeight="bold"
 							color="white"
-							letterSpacing="-0.5px"
+							lineHeight="1"
+							// Großbuchstaben wirken mit etwas mehr Abstand besser
+							letterSpacing={
+								film.portalName === film.portalName.toUpperCase()
+									? "1px"
+									: "-0.5px"
+							}
 						>
 							{film.portalName}
 						</Text>

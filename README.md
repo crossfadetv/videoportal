@@ -33,6 +33,7 @@ Ohne `?film=` wird der Standardfilm aus `src/data/films/index.ts` geladen.
 | `portalName` | Portalname neben dem Logo und im Browser-Tab; `""` = nur Logo |
 | `portalLogo` | eigenes Logo (auch Tab-Icon); ohne Angabe Kreis mit Play-Symbol |
 | `portalLogoHeight` | Höhe des Logos, Standard `"28px"` |
+| `portalNameSize` | Schriftgröße des Portalnamens, z.B. `"2xl"` oder `"32px"`, Standard `"lg"` |
 | `accentColor` | Farbe von Standard-Logo und Buttons, Standard `"#e8452c"` |
 | `background` | Hintergrundmuster, `"plain"` (Standard) oder `"dots"` |
 | `username` | Wer schaut, z.B. `"Ben"` → Avatar „B“, eigene Kommentare als „@ben“ |

@@ -27,6 +27,7 @@ export type Film = {
 	portalName: string; // Name neben dem Logo und im Browser-Tab; "" = nur Logo
 	portalLogo?: string; // eigenes Logo, sonst Kreis mit Play-Symbol
 	portalLogoHeight?: string; // Standard "28px"
+	portalNameSize?: string; // Schriftgröße des Namens, z.B. "2xl" oder "32px"; Standard "lg"
 	accentColor?: string; // Standard-Logo & Buttons, Standard "#e8452c"
 	background?: BackgroundId; // Standard "plain", siehe src/data/backgrounds.ts
 
