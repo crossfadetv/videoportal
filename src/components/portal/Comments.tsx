@@ -87,10 +87,19 @@ function CommentInput({ onPost }: { onPost: (text: string) => void }) {
 		}
 	};
 
+	// Bewusst prominenter als die übrigen Kommentare: Hier tippt die Figur
+	// im Film ihre Botschaft, das soll im Bild gut lesbar sein.
+	const focusStyle = {
+		borderColor: accentColor,
+		boxShadow: `0 0 0 2px ${accentColor}`,
+		bg: "whiteAlpha.100",
+		outline: "none",
+	};
+
 	return (
 		<HStack align="flex-start" gap="4">
-			<Avatar name={film.username} />
-			<VStack align="stretch" gap="2" flex="1">
+			<Avatar name={film.username} size="12" />
+			<VStack align="stretch" gap="3" flex="1">
 				<Textarea
 					value={value}
 					onChange={(e) => setValue(e.target.value)}
@@ -100,15 +109,21 @@ function CommentInput({ onPost }: { onPost: (text: string) => void }) {
 					placeholder="Kommentieren …"
 					rows={1}
 					autoresize
-					variant="flushed"
+					variant="outline"
 					resize="none"
 					minH="0"
-					px="0"
-					py="1"
-					fontSize="sm"
-					color="gray.100"
-					borderColor="whiteAlpha.300"
+					px="4"
+					py="3"
+					fontSize="lg"
+					lineHeight="1.5"
+					color="white"
+					bg="whiteAlpha.50"
+					borderWidth="1px"
+					borderColor="whiteAlpha.400"
+					rounded="xl"
 					_placeholder={{ color: "gray.400" }}
+					_focus={focusStyle}
+					_focusVisible={focusStyle}
 					// Passwortmanager (z.B. Dashlane) sollen das Feld ignorieren.
 					autoComplete="off"
 					data-form-type="other"
@@ -117,7 +132,7 @@ function CommentInput({ onPost }: { onPost: (text: string) => void }) {
 				{(active || value !== "") && (
 					<HStack justify="flex-end" gap="2">
 						<Button
-							size="sm"
+							size="md"
 							variant="ghost"
 							rounded="full"
 							color="gray.100"
@@ -126,7 +141,9 @@ function CommentInput({ onPost }: { onPost: (text: string) => void }) {
 							Abbrechen
 						</Button>
 						<Button
-							size="sm"
+							size="md"
+							px="5"
+							fontWeight="semibold"
 							rounded="full"
 							bg={value.trim() ? accentColor : "whiteAlpha.100"}
 							color={value.trim() ? "white" : "gray.500"}
