@@ -23,7 +23,7 @@ export const aliens: Film = {
 	searchbarText: "KI Aliens Beweise",
 
 	filmTitle:
-		"KI wird von ALIENS gesteuert?! Die Beweise, die sie dir verschweigen 👽",
+		"Hast DU dich schon einmal gefragt, WARUM die K.I. ALLES weiss?! Die verstörende Wahrheit in meinem neuen Buch 👽",
 	videoDescription:
 		"Was, wenn die künstliche Intelligenz gar nicht künstlich ist? In diesem Video zeige ich euch Hinweise, über die niemand sprechen will.\n\nTeilt dieses Video, bevor es gelöscht wird!",
 	hashTags: ["#KI", "#Aliens", "#Wahrheit", "#AlienInvasion"],
