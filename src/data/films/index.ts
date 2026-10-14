@@ -18,6 +18,9 @@ export const films: Record<string, Film> = {
 
 export const defaultFilmId = "aliens";
 
+// Wenn ein Film keine `accentColor` angibt.
+export const defaultAccentColor = "#e8452c";
+
 export function getFilm(id: string | undefined): Film | undefined {
 	return films[id ?? defaultFilmId];
 }

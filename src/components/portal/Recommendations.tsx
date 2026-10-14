@@ -1,7 +1,8 @@
 "use client";
 
 import { Box, HStack, Image, Text, VStack } from "@chakra-ui/react";
-import type { Recommendation } from "@/data/films/types";
+import type { VideoRecommendation } from "@/data/films/types";
+import { fakeUploadAgo, fakeViews, formatCompact } from "@/lib/fake";
 import { useFilm } from "../FilmContext";
 
 // Dunkle Farbverläufe als Thumbnail-Ersatz, wenn kein Bild angegeben ist.
@@ -13,7 +14,13 @@ const fallbackGradients = [
 	"linear-gradient(135deg, #2a1e3a, #120b1a)",
 ];
 
-function Thumbnail({ rec, index }: { rec: Recommendation; index: number }) {
+function Thumbnail({
+	rec,
+	index,
+}: {
+	rec: VideoRecommendation;
+	index: number;
+}) {
 	return (
 		<Box
 			position="relative"
@@ -26,14 +33,8 @@ function Thumbnail({ rec, index }: { rec: Recommendation; index: number }) {
 				background: fallbackGradients[index % fallbackGradients.length],
 			}}
 		>
-			{rec.thumbnailUrl && (
-				<Image
-					src={rec.thumbnailUrl}
-					alt=""
-					w="full"
-					h="full"
-					objectFit="cover"
-				/>
+			{rec.recImg && (
+				<Image src={rec.recImg} alt="" w="full" h="full" objectFit="cover" />
 			)}
 			<Box
 				position="absolute"
@@ -46,19 +47,19 @@ function Thumbnail({ rec, index }: { rec: Recommendation; index: number }) {
 				fontSize="2xs"
 				fontWeight="semibold"
 			>
-				{rec.duration}
+				{rec.recLength}
 			</Box>
 		</Box>
 	);
 }
 
 export function Recommendations() {
-	const { recommendations } = useFilm();
+	const { videoRecommendations } = useFilm();
 
 	return (
 		<VStack align="stretch" gap="3">
-			{recommendations.map((rec, i) => (
-				<HStack key={rec.title} align="flex-start" gap="2">
+			{videoRecommendations.map((rec, i) => (
+				<HStack key={rec.recFilmTitle} align="flex-start" gap="2">
 					<Thumbnail rec={rec} index={i} />
 					<VStack align="flex-start" gap="1" minW="0">
 						<Text
@@ -68,13 +69,14 @@ export function Recommendations() {
 							lineHeight="1.3"
 							lineClamp="2"
 						>
-							{rec.title}
+							{rec.recFilmTitle}
 						</Text>
 						<Text color="gray.400" fontSize="xs">
-							{rec.channel}
+							{rec.recChannel}
 						</Text>
 						<Text color="gray.400" fontSize="xs">
-							{rec.views} · {rec.uploadedAgo}
+							{formatCompact(fakeViews(rec.recFilmTitle))} Aufrufe ·{" "}
+							{fakeUploadAgo(rec.recFilmTitle)}
 						</Text>
 					</VStack>
 				</HStack>

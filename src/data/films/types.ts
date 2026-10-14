@@ -1,71 +1,53 @@
 // Typen für eine Film-Konfiguration. Jeder Film in `src/data/films/`
 // exportiert ein Objekt vom Typ `Film`.
 //
-// Zahlen (Aufrufe, Likes, …) sind Texte, damit sie genau so erscheinen,
-// wie sie hier stehen – z.B. "312’847" oder "1,2 Mio.".
+// Was hier nicht angegeben wird (Aufrufe der Vorschläge, Alter, Likes von
+// Kommentaren, Avatarfarben …), wird mit stabilen Zufallswerten gefüllt,
+// siehe src/lib/fake.ts.
 
 import type { BackgroundId } from "../backgrounds";
 
-export type Comment = {
-	author: string; // z.B. "@lena_s"
-	avatarColor?: string;
-	timeAgo: string; // z.B. "vor 2 Stunden"
-	text: string;
-	likes?: string;
-	pinned?: boolean;
+export type VideoRecommendation = {
+	recFilmTitle: string;
+	recChannel: string;
+	recImg?: string; // Thumbnail, z.B. "/films/meinfilm/thumb1.jpg"; sonst Farbverlauf
+	recLength: string; // z.B. "12:47"
 };
 
-export type Recommendation = {
-	title: string;
-	channel: string;
-	views: string;
-	uploadedAgo: string;
-	duration: string; // z.B. "12:47"
-	thumbnailUrl?: string; // Bild in /public/films/<film>/, sonst Farbverlauf
+export type VideoComment = {
+	channel: string; // z.B. "lena_s" (wird als "@lena_s" angezeigt)
+	text: string;
 };
 
 export type Film = {
-	// Anzeigename, nur zur Orientierung (z.B. in Fehlermeldungen).
-	title: string;
+	// Für welchen Film/welche Produktion – nur zur Orientierung.
+	production: string;
 
-	// Hintergrundmuster, siehe src/data/backgrounds.ts (Standard: "plain")
-	background?: BackgroundId;
+	// ----- Portal ----------------------------------------------------------
+	portalName: string; // Name neben dem Logo und im Browser-Tab; "" = nur Logo
+	portalLogo?: string; // eigenes Logo, sonst Kreis mit Play-Symbol
+	portalLogoHeight?: string; // Standard "28px"
+	accentColor?: string; // Standard-Logo & Buttons, Standard "#e8452c"
+	background?: BackgroundId; // Standard "plain", siehe src/data/backgrounds.ts
 
-	appInfo: {
-		appName: string;
-		accentColor: string; // Logo & Abo-Button
-		searchQuery?: string; // steht im Suchfeld oben
-	};
+	// ----- Wer schaut ------------------------------------------------------
+	username: string; // z.B. "Ben" → Avatar "B", eigene Kommentare als "@ben"
+	searchbarText?: string;
 
-	// Wer schaut gerade (Avatar oben rechts und beim Kommentarfeld)
-	viewer: {
-		initial: string;
-		avatarColor: string;
-	};
+	// ----- Video -----------------------------------------------------------
+	filmTitle: string;
+	videoDescription: string;
+	hashTags?: string[];
+	channelName: string;
+	followersAmount: number;
+	likesAmount: number;
+	viewsAmount: number;
+	uploadedAgo?: string; // z.B. "vor 3 Tagen"; sonst Zufallswert
 
-	video: {
-		title: string;
-		views: string;
-		uploadedAgo: string;
-		likes: string;
-		description: string;
-		hashtags?: string[];
-		// Platzhalter für das Video, das im Schnitt eingesetzt wird.
-		// Einheitliche Farbe = einfacher zu ersetzen/keyen.
-		placeholderColor?: string; // Standard: Schwarz
-		placeholderLabel?: string; // leer lassen ("") = kein Text
-	};
+	// Platzhalter für das Video, das im Schnitt eingesetzt wird.
+	placeholderColor?: string; // Standard Schwarz; z.B. "#00ff00" fürs Keying
+	placeholderLabel?: string; // Standard "Videocontainer"; "" = kein Text
 
-	channel: {
-		name: string;
-		initial: string;
-		avatarColor: string;
-		subscribers: string;
-		verified?: boolean;
-	};
-
-	commentCount: string;
-	comments: Comment[];
-
-	recommendations: Recommendation[];
+	videoRecommendations: VideoRecommendation[];
+	comments: VideoComment[];
 };

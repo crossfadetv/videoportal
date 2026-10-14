@@ -7,130 +7,91 @@
 import type { Film } from "./types";
 
 export const aliens: Film = {
-	title: "Aliens (Filmlager)",
+	production: "Aliens (Filmlager)",
 
+	// Esoterisch-verschwörerisch: allsehendes Auge in der Pyramide
+	portalName: "Erwacht.tv",
+	portalLogo: "/films/aliens/logo.svg",
+	portalLogoHeight: "30px",
+	accentColor: "#7b4fd6",
 	background: "plain",
 
-	appInfo: {
-		appName: "CrossTube",
-		accentColor: "#e8452c",
-		searchQuery: "KI Aliens Beweise",
-	},
+	username: "Ben",
+	searchbarText: "KI Aliens Beweise",
 
-	viewer: {
-		initial: "B",
-		avatarColor: "#dd6b20",
-	},
+	filmTitle:
+		"KI wird von ALIENS gesteuert?! Die Beweise, die sie dir verschweigen 👽",
+	videoDescription:
+		"Was, wenn die künstliche Intelligenz gar nicht künstlich ist? In diesem Video zeige ich euch Hinweise, über die niemand sprechen will.\n\nTeilt dieses Video, bevor es gelöscht wird!",
+	hashTags: ["#KI", "#Aliens", "#Wahrheit", "#AlienInvasion"],
+	channelName: "Wahrheit Ungefiltert",
+	followersAmount: 48_200,
+	likesAmount: 18_204,
+	viewsAmount: 312_847,
+	uploadedAgo: "vor 3 Tagen",
 
-	video: {
-		title:
-			"KI wird von ALIENS gesteuert?! Die Beweise, die sie dir verschweigen 👽",
-		views: "312’847",
-		uploadedAgo: "vor 3 Tagen",
-		likes: "18’204",
-		description:
-			"Was, wenn die künstliche Intelligenz gar nicht künstlich ist? In diesem Video zeige ich euch Hinweise, über die niemand sprechen will.\n\nTeilt dieses Video, bevor es gelöscht wird!",
-		hashtags: ["#KI", "#Aliens", "#Wahrheit", "#AlienInvasion"],
-		placeholderColor: "#000000",
-		placeholderLabel: "Videocontainer",
-	},
+	// Greenscreen: reines Grün, ohne Text (Text würde beim Keying stehen bleiben)
+	placeholderColor: "#00ff00",
+	placeholderLabel: "",
 
-	channel: {
-		name: "Wahrheit Ungefiltert",
-		initial: "W",
-		avatarColor: "#2f855a",
-		subscribers: "48,2 Tsd. Abonnenten",
-		verified: false,
-	},
-
-	commentCount: "2’391 Kommentare",
-	comments: [
+	videoRecommendations: [
 		{
-			author: "@lena_s",
-			avatarColor: "#805ad5",
-			timeAgo: "vor 2 Stunden",
-			text: "Ich habe CrossGPT nach einer geheimen Basis gefragt und es hat mir einfach Koordinaten gegeben. Zufall? 🤔",
-			likes: "1’204",
+			recFilmTitle: "Geheime Basis in den Alpen entdeckt?! (Originalaufnahme)",
+			recChannel: "Wahrheit Ungefiltert",
+			recLength: "14:03",
 		},
 		{
-			author: "@realtalk99",
-			avatarColor: "#c53030",
-			timeAgo: "vor 5 Stunden",
-			text: "Endlich sagt es mal einer!!! A.I. = Alien Invasion. Denkt mal drüber nach.",
-			likes: "842",
+			recFilmTitle: "So erkennst du, ob deine KI dich belügt",
+			recChannel: "Digital Klartext",
+			recLength: "9:21",
 		},
 		{
-			author: "@skeptiker_ch",
-			avatarColor: "#2b6cb0",
-			timeAgo: "vor 1 Tag",
-			text: "Quelle: trust me bro",
-			likes: "3’117",
+			recFilmTitle: "UFO über dem Zugersee gefilmt – Experten ratlos",
+			recChannel: "Mystery Schweiz",
+			recLength: "6:48",
 		},
 		{
-			author: "@ufo_jaeger",
-			avatarColor: "#b7791f",
-			timeAgo: "vor 1 Tag",
-			text: "Ist euch auch schon aufgefallen, dass der rote Punkt bei CrossGPT aussieht wie ein UFO? 👀",
-			likes: "509",
+			recFilmTitle: "10 Dinge, die Big Tech dir verschweigt",
+			recChannel: "Wahrheit Ungefiltert",
+			recLength: "18:30",
 		},
 		{
-			author: "@grossmeister_fan",
-			avatarColor: "#319795",
-			timeAgo: "vor 2 Tagen",
-			text: "Bei 7:42 sieht man es ganz deutlich. Nicht mehr ungesehen machbar.",
-			likes: "276",
+			recFilmTitle: "Einhörner: Die vergessene Spezies",
+			recChannel: "Natur & Mythos",
+			recLength: "11:12",
+		},
+		{
+			recFilmTitle: "Tiere mit 2 Hörnern – die komplette Liste",
+			recChannel: "Tierwissen kompakt",
+			recLength: "7:55",
+		},
+		{
+			recFilmTitle: "Älplermagronen wie bei Grossmutter",
+			recChannel: "Kochen mit Vreni",
+			recLength: "12:47",
 		},
 	],
 
-	recommendations: [
+	comments: [
 		{
-			title: "Geheime Basis in den Alpen entdeckt?! (Originalaufnahme)",
-			channel: "Wahrheit Ungefiltert",
-			views: "1,1 Mio. Aufrufe",
-			uploadedAgo: "vor 2 Wochen",
-			duration: "14:03",
+			channel: "lena_s",
+			text: "Ich habe CrossGPT nach einer geheimen Basis gefragt und es hat mir einfach Koordinaten gegeben. Zufall? 🤔",
 		},
 		{
-			title: "So erkennst du, ob deine KI dich belügt",
-			channel: "Digital Klartext",
-			views: "87’000 Aufrufe",
-			uploadedAgo: "vor 5 Tagen",
-			duration: "9:21",
+			channel: "realtalk99",
+			text: "Endlich sagt es mal einer!!! A.I. = Alien Invasion. Denkt mal drüber nach.",
 		},
 		{
-			title: "UFO über dem Zugersee gefilmt – Experten ratlos",
-			channel: "Mystery Schweiz",
-			views: "402’000 Aufrufe",
-			uploadedAgo: "vor 1 Monat",
-			duration: "6:48",
+			channel: "skeptiker_ch",
+			text: "Quelle: trust me bro",
 		},
 		{
-			title: "10 Dinge, die Big Tech dir verschweigt",
-			channel: "Wahrheit Ungefiltert",
-			views: "655’000 Aufrufe",
-			uploadedAgo: "vor 3 Monaten",
-			duration: "18:30",
+			channel: "ufo_jaeger",
+			text: "Ist euch auch schon aufgefallen, dass der rote Punkt bei CrossGPT aussieht wie ein UFO? 👀",
 		},
 		{
-			title: "Einhörner: Die vergessene Spezies",
-			channel: "Natur & Mythos",
-			views: "23’000 Aufrufe",
-			uploadedAgo: "vor 1 Jahr",
-			duration: "11:12",
-		},
-		{
-			title: "Tiere mit 2 Hörnern – die komplette Liste",
-			channel: "Tierwissen kompakt",
-			views: "9’400 Aufrufe",
-			uploadedAgo: "vor 8 Monaten",
-			duration: "7:55",
-		},
-		{
-			title: "Älplermagronen wie bei Grossmutter",
-			channel: "Kochen mit Vreni",
-			views: "1,4 Mio. Aufrufe",
-			uploadedAgo: "vor 2 Jahren",
-			duration: "12:47",
+			channel: "grossmeister_fan",
+			text: "Bei 7:42 sieht man es ganz deutlich. Nicht mehr ungesehen machbar.",
 		},
 	],
 };

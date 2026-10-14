@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, HStack, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Icon, Image, Text } from "@chakra-ui/react";
 import {
 	LuBell,
 	LuMenu,
@@ -9,11 +9,13 @@ import {
 	LuSearch,
 	LuVideo,
 } from "react-icons/lu";
+import { defaultAccentColor } from "@/data/films";
 import { useFilm } from "../FilmContext";
 import { Avatar } from "./Avatar";
 
 export function TopBar() {
-	const { appInfo, viewer } = useFilm();
+	const film = useFilm();
+	const accentColor = film.accentColor ?? defaultAccentColor;
 
 	return (
 		<Flex
@@ -30,31 +32,43 @@ export function TopBar() {
 			<HStack gap="5">
 				<Icon as={LuMenu} boxSize="5" color="gray.200" />
 				<HStack gap="2">
-					{/* Eigenes Zeichen (Kreis), bewusst nicht wie bekannte Plattformen */}
-					<Flex
-						align="center"
-						justify="center"
-						w="7"
-						h="7"
-						rounded="full"
-						bg={appInfo.accentColor}
-					>
-						<Icon
-							as={LuPlay}
-							boxSize="3"
-							color="white"
-							fill="white"
-							ml="0.5"
+					{film.portalLogo ? (
+						<Image
+							src={film.portalLogo}
+							alt={film.portalName}
+							h={film.portalLogoHeight ?? "28px"}
+							w="auto"
+							objectFit="contain"
 						/>
-					</Flex>
-					<Text
-						fontSize="lg"
-						fontWeight="bold"
-						color="white"
-						letterSpacing="-0.5px"
-					>
-						{appInfo.appName}
-					</Text>
+					) : (
+						// Standard-Zeichen (Kreis), bewusst nicht wie bekannte Plattformen
+						<Flex
+							align="center"
+							justify="center"
+							w="7"
+							h="7"
+							rounded="full"
+							bg={accentColor}
+						>
+							<Icon
+								as={LuPlay}
+								boxSize="3"
+								color="white"
+								fill="white"
+								ml="0.5"
+							/>
+						</Flex>
+					)}
+					{film.portalName && (
+						<Text
+							fontSize="lg"
+							fontWeight="bold"
+							color="white"
+							letterSpacing="-0.5px"
+						>
+							{film.portalName}
+						</Text>
+					)}
 				</HStack>
 			</HStack>
 
@@ -70,7 +84,7 @@ export function TopBar() {
 					overflow="hidden"
 				>
 					<Text flex="1" px="4" color="gray.100" fontSize="md">
-						{appInfo.searchQuery}
+						{film.searchbarText}
 					</Text>
 					<Flex
 						align="center"
@@ -111,7 +125,7 @@ export function TopBar() {
 						align="center"
 						justify="center"
 						rounded="full"
-						bg={appInfo.accentColor}
+						bg={accentColor}
 						color="white"
 						fontSize="2xs"
 						fontWeight="bold"
@@ -119,7 +133,7 @@ export function TopBar() {
 						9+
 					</Flex>
 				</Box>
-				<Avatar initial={viewer.initial} color={viewer.avatarColor} size="8" />
+				<Avatar name={film.username} size="8" />
 			</HStack>
 		</Flex>
 	);

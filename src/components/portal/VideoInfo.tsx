@@ -2,13 +2,14 @@
 
 import { Box, Flex, HStack, Icon, Text, VStack } from "@chakra-ui/react";
 import {
-	LuBadgeCheck,
 	LuDownload,
 	LuEllipsis,
 	LuForward,
 	LuThumbsDown,
 	LuThumbsUp,
 } from "react-icons/lu";
+import { defaultAccentColor } from "@/data/films";
+import { fakeUploadAgo, formatCompact, formatFull } from "@/lib/fake";
 import { useFilm } from "../FilmContext";
 import { Avatar } from "./Avatar";
 
@@ -30,29 +31,25 @@ function Pill({ children }: { children: React.ReactNode }) {
 }
 
 export function VideoInfo() {
-	const { video, channel, appInfo } = useFilm();
+	const film = useFilm();
+	const uploadedAgo = film.uploadedAgo ?? fakeUploadAgo(film.filmTitle);
 
 	return (
 		<VStack align="stretch" gap="3" mt="3">
 			<Text fontSize="xl" fontWeight="bold" color="white" lineHeight="1.3">
-				{video.title}
+				{film.filmTitle}
 			</Text>
 
 			<Flex justify="space-between" align="center" wrap="wrap" gap="3">
 				{/* Kanal */}
 				<HStack gap="3">
-					<Avatar initial={channel.initial} color={channel.avatarColor} />
+					<Avatar name={film.channelName} />
 					<VStack align="flex-start" gap="0">
-						<HStack gap="1">
-							<Text color="white" fontWeight="semibold">
-								{channel.name}
-							</Text>
-							{channel.verified && (
-								<Icon as={LuBadgeCheck} boxSize="3.5" color="gray.400" />
-							)}
-						</HStack>
+						<Text color="white" fontWeight="semibold">
+							{film.channelName}
+						</Text>
 						<Text color="gray.400" fontSize="xs">
-							{channel.subscribers}
+							{formatCompact(film.followersAmount)} Abonnenten
 						</Text>
 					</VStack>
 					<Flex
@@ -61,7 +58,7 @@ export function VideoInfo() {
 						px="4"
 						h="9"
 						rounded="full"
-						bg={appInfo.accentColor}
+						bg={film.accentColor ?? defaultAccentColor}
 						color="white"
 						fontSize="sm"
 						fontWeight="semibold"
@@ -88,7 +85,7 @@ export function VideoInfo() {
 							borderColor="whiteAlpha.300"
 						>
 							<Icon as={LuThumbsUp} boxSize="4" />
-							<Text>{video.likes}</Text>
+							<Text>{formatCompact(film.likesAmount)}</Text>
 						</HStack>
 						<Flex px="4">
 							<Icon as={LuThumbsDown} boxSize="4" />
@@ -125,15 +122,15 @@ export function VideoInfo() {
 				color="gray.100"
 			>
 				<Text fontWeight="semibold">
-					{video.views} Aufrufe · {video.uploadedAgo}
-					{video.hashtags && (
+					{formatFull(film.viewsAmount)} Aufrufe · {uploadedAgo}
+					{film.hashTags && (
 						<Text as="span" color="blue.300" fontWeight="normal" ml="2">
-							{video.hashtags.join(" ")}
+							{film.hashTags.join(" ")}
 						</Text>
 					)}
 				</Text>
 				<Text mt="1" whiteSpace="pre-wrap" lineHeight="1.6">
-					{video.description}
+					{film.videoDescription}
 				</Text>
 			</Box>
 		</VStack>

@@ -1,22 +1,171 @@
 "use client";
 
-import { Box, HStack, Icon, Text, VStack } from "@chakra-ui/react";
+import { Button, HStack, Icon, Text, Textarea, VStack } from "@chakra-ui/react";
+import { type KeyboardEvent, useState } from "react";
 import {
 	LuArrowDownWideNarrow,
 	LuThumbsDown,
 	LuThumbsUp,
 } from "react-icons/lu";
+import { defaultAccentColor } from "@/data/films";
+import {
+	fakeCommentAgo,
+	fakeCommentCount,
+	fakeCommentLikes,
+	formatCompact,
+	formatFull,
+} from "@/lib/fake";
 import { useFilm } from "../FilmContext";
-import { Avatar } from "./Avatar";
+import { Avatar, handleOf } from "./Avatar";
+
+type ShownComment = {
+	channel: string;
+	text: string;
+	timeAgo: string;
+	likes?: number;
+};
+
+function CommentRow({ comment }: { comment: ShownComment }) {
+	return (
+		<HStack align="flex-start" gap="4">
+			<Avatar name={comment.channel} />
+			<VStack align="flex-start" gap="1" flex="1">
+				<HStack gap="2" fontSize="xs">
+					<Text color="white" fontWeight="semibold">
+						{handleOf(comment.channel)}
+					</Text>
+					<Text color="gray.400">{comment.timeAgo}</Text>
+				</HStack>
+				<Text
+					color="gray.100"
+					fontSize="sm"
+					lineHeight="1.5"
+					whiteSpace="pre-wrap"
+				>
+					{comment.text}
+				</Text>
+				<HStack gap="4" color="gray.300" fontSize="xs" mt="1">
+					<HStack gap="1.5">
+						<Icon as={LuThumbsUp} boxSize="4" />
+						{comment.likes !== undefined && (
+							<Text>{formatCompact(comment.likes)}</Text>
+						)}
+					</HStack>
+					<Icon as={LuThumbsDown} boxSize="4" />
+					<Text fontWeight="semibold">Antworten</Text>
+				</HStack>
+			</VStack>
+		</HStack>
+	);
+}
+
+// Eingabefeld: Klick öffnet die Buttons, Enter oder "Kommentieren" postet.
+// Neue Kommentare erscheinen ganz oben und verschwinden bei F5 wieder.
+function CommentInput({ onPost }: { onPost: (text: string) => void }) {
+	const film = useFilm();
+	const accentColor = film.accentColor ?? defaultAccentColor;
+	const [value, setValue] = useState("");
+	const [active, setActive] = useState(false);
+
+	const post = () => {
+		const text = value.trim();
+		if (!text) return;
+		onPost(text);
+		setValue("");
+		setActive(false);
+	};
+
+	const cancel = () => {
+		setValue("");
+		setActive(false);
+	};
+
+	const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
+			post();
+		}
+	};
+
+	return (
+		<HStack align="flex-start" gap="4">
+			<Avatar name={film.username} />
+			<VStack align="stretch" gap="2" flex="1">
+				<Textarea
+					value={value}
+					onChange={(e) => setValue(e.target.value)}
+					onFocus={() => setActive(true)}
+					onClick={() => setActive(true)}
+					onKeyDown={onKeyDown}
+					placeholder="Kommentieren …"
+					rows={1}
+					autoresize
+					variant="flushed"
+					resize="none"
+					minH="0"
+					px="0"
+					py="1"
+					fontSize="sm"
+					color="gray.100"
+					borderColor="whiteAlpha.300"
+					_placeholder={{ color: "gray.400" }}
+					// Passwortmanager (z.B. Dashlane) sollen das Feld ignorieren.
+					autoComplete="off"
+					data-form-type="other"
+					data-lpignore="true"
+				/>
+				{(active || value !== "") && (
+					<HStack justify="flex-end" gap="2">
+						<Button
+							size="sm"
+							variant="ghost"
+							rounded="full"
+							color="gray.100"
+							onClick={cancel}
+						>
+							Abbrechen
+						</Button>
+						<Button
+							size="sm"
+							rounded="full"
+							bg={value.trim() ? accentColor : "whiteAlpha.100"}
+							color={value.trim() ? "white" : "gray.500"}
+							onClick={post}
+						>
+							Kommentieren
+						</Button>
+					</HStack>
+				)}
+			</VStack>
+		</HStack>
+	);
+}
 
 export function Comments() {
-	const { comments, commentCount, viewer } = useFilm();
+	const film = useFilm();
+	const [posted, setPosted] = useState<ShownComment[]>([]);
+
+	// Kommentare aus der Film-Datei, ergänzt um stabile Zufallswerte.
+	const scripted: ShownComment[] = film.comments.map((c) => ({
+		...c,
+		timeAgo: fakeCommentAgo(c.text),
+		likes: fakeCommentLikes(c.text),
+	}));
+	const count =
+		fakeCommentCount(film.viewsAmount, film.filmTitle) + posted.length;
+
+	const addComment = (text: string) => {
+		setPosted((prev) => [
+			{ channel: film.username, text, timeAgo: "vor 0 Sekunden" },
+			...prev,
+		]);
+	};
 
 	return (
 		<VStack align="stretch" gap="6" mt="6">
 			<HStack gap="8">
 				<Text fontSize="lg" fontWeight="bold" color="white">
-					{commentCount}
+					{formatFull(count)} Kommentare
 				</Text>
 				<HStack gap="2" color="gray.100" fontSize="sm" fontWeight="medium">
 					<Icon as={LuArrowDownWideNarrow} boxSize="5" />
@@ -24,47 +173,10 @@ export function Comments() {
 				</HStack>
 			</HStack>
 
-			{/* Kommentarfeld – nur Optik */}
-			<HStack gap="4">
-				<Avatar initial={viewer.initial} color={viewer.avatarColor} />
-				<Box
-					flex="1"
-					pb="1"
-					borderBottomWidth="1px"
-					borderColor="whiteAlpha.300"
-					color="gray.400"
-					fontSize="sm"
-				>
-					Kommentieren …
-				</Box>
-			</HStack>
+			<CommentInput onPost={addComment} />
 
-			{comments.map((c) => (
-				<HStack key={c.author + c.text} align="flex-start" gap="4">
-					<Avatar
-						initial={c.author.replace("@", "")[0]?.toUpperCase() ?? "?"}
-						color={c.avatarColor}
-					/>
-					<VStack align="flex-start" gap="1" flex="1">
-						<HStack gap="2" fontSize="xs">
-							<Text color="white" fontWeight="semibold">
-								{c.author}
-							</Text>
-							<Text color="gray.400">{c.timeAgo}</Text>
-						</HStack>
-						<Text color="gray.100" fontSize="sm" lineHeight="1.5">
-							{c.text}
-						</Text>
-						<HStack gap="4" color="gray.300" fontSize="xs" mt="1">
-							<HStack gap="1.5">
-								<Icon as={LuThumbsUp} boxSize="4" />
-								{c.likes && <Text>{c.likes}</Text>}
-							</HStack>
-							<Icon as={LuThumbsDown} boxSize="4" />
-							<Text fontWeight="semibold">Antworten</Text>
-						</HStack>
-					</VStack>
-				</HStack>
+			{[...posted, ...scripted].map((c, i) => (
+				<CommentRow key={`${i}-${c.channel}`} comment={c} />
 			))}
 		</VStack>
 	);
